@@ -158,7 +158,7 @@ This step computes Query Performance Predictions using multiple methods:
 - `nqc-norm-k100`, `nqc-no-norm-k100`: Normalized Query Clarity at k=100
 - `smv-norm-k100`, `smv-no-norm-k100`: Score Magnitude Variance
 - `sigma-x0.5`, `sigma-max`: Score distribution statistics
-- `RSD`: Relative Score Deviation
+- `RSD`: Robust Standard Deviation
 
 **File Format**: CSV with columns: `query_id,clarity-score-k100,...`
 

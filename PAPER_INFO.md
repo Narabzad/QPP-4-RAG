@@ -60,7 +60,7 @@ Each method generates 5 different trial sets.
 - Normalized Query Clarity (nqc-norm-k100, nqc-no-norm-k100)
 - Score Magnitude Variance (smv-norm-k100, smv-no-norm-k100)
 - Score Distribution Statistics (sigma-x0.5, sigma-max)
-- Relative Score Deviation (RSD)
+- Robust Standard Deviation (RSD)
 
 ### Supervised QPP
 - BERT-QPP (Cross-Encoder)
