@@ -1,0 +1,79 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Data files (large)
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+
+# Logs
+*.log
+*.txt.log
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# API keys and secrets
+.env
+.env.local
+*.key
+*.pem
+secrets/
+
+# Cache directories
+.cache/
+*.cache/
+data-gym-cache/
+index_cache/
+
+# Large result files (uncomment if needed)
+# querygym/rag_results/
+# querygym/rag_prepared/
+
+# Model checkpoints (if large)
+*.ckpt
+*.pt
+*.pth
+models/
+checkpoints/
+
+# Java
+*.class
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
