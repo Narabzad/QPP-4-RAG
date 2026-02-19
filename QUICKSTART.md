@@ -21,8 +21,8 @@ This repository contains code and results for evaluating Query Performance Predi
 │   ├── rag_results/            # Step 2: RAG generated answers
 │   ├── rag_nuggetized_eval/     # Step 3: Nuggetizer evaluation
 │   ├── qpp/                     # Step 4: QPP predictions (93 CSV files)
-│   │   └── bert_qpp_results/    # Step 4: BERT-QPP predictions
-│   │   └── QSDQPP/             # Step 4: QSDQPP predictions
+│   │   ├── bert_qpp_results/    # Step 4: BERT-QPP predictions
+│   │   └── QSDQPP/              # Step 4: QSDQPP predictions
 │
 ├── QPP4CS/                      # QPP method implementations
 ├── BERTQPP/                     # BERT-QPP implementation
