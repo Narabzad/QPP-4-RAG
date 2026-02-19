@@ -253,14 +253,14 @@ python run_bert_qpp.py \
     --queries-dir queries \
     --retrieval-dir retrieval \
     --retrieval-cohere-dir retrieval_cohere \
-    --output-dir bert_qpp_results \
+    --output-dir qpp/bert_qpp_results \
     --ce-model-path path/to/cross-encoder-model \
     --bi-model-path path/to/bi-encoder-model
 ```
 
 **Output**:
-- `bert_qpp_results/bert_qpp_scores.json`
-- `bert_qpp_results/bert_qpp_scores.csv`
+- `qpp/bert_qpp_results/bert_qpp_scores.json`
+- `qpp/bert_qpp_results/bert_qpp_scores.csv`
 
 **Note**: BERT-QPP models need to be trained separately or downloaded. See `BERTQPP/README.md` for details.
 
@@ -277,7 +277,7 @@ After running all steps, verify the outputs:
 - **Nuggetizer scores**: 31 score files in `rag_nuggetized_eval/retrieval/scores/`, 31 in `rag_nuggetized_eval/retrieval_cohere/scores/`
 - **Pre-retrieval QPP**: 31 CSV files in `qpp/`
 - **Post-retrieval QPP**: 62 CSV files in `qpp/` (31 × 2 retrieval methods)
-- **BERT-QPP**: 2 files in `bert_qpp_results/`
+- **BERT-QPP**: 2 files in `qpp/bert_qpp_results/`
 
 ### Data Validation
 

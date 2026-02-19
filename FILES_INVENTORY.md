@@ -129,7 +129,7 @@ This document lists all files that should be included in the repository for repr
 - RSD
 
 ### BERT-QPP Predictions
-**Location**: `querygym/bert_qpp_results/`
+**Location**: `querygym/qpp/bert_qpp_results/`
 
 - `bert_qpp_scores.json` - JSON format with all predictions
 - `bert_qpp_scores.csv` - CSV format for analysis

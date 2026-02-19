@@ -102,7 +102,7 @@ All code, data, and results are provided in this repository:
 - Query variants: `querygym/queries/`
 - RAG results: `querygym/rag_results/`
 - Nuggetizer scores: `querygym/rag_nuggetized_eval/`
-- QPP predictions: `querygym/qpp/`, `querygym/bert_qpp_results/`, `querygym/QSDQPP/`
+- QPP predictions: `querygym/qpp/` (including `bert_qpp_results/`), `querygym/QSDQPP/`
 
 See `REPRODUCIBILITY.md` for detailed instructions.
 

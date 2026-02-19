@@ -21,7 +21,7 @@ This repository is organized into four main pipeline steps:
 │   ├── rag_results/                  # Step 2: RAG generation results
 │   ├── rag_nuggetized_eval/          # Step 3: Nuggetizer evaluation results
 │   ├── qpp/                          # Step 4: QPP prediction files
-│   ├── bert_qpp_results/              # Step 4: BERT-QPP predictions
+│   │   └── bert_qpp_results/         # Step 4: BERT-QPP predictions
 │   └── [scripts for each step]        # Execution scripts
 ├── QPP4CS/                           # QPP method implementations
 ├── BERTQPP/                          # BERT-QPP implementation
@@ -128,7 +128,7 @@ rag_nuggetized_eval/
 
 **Locations**:
 - `querygym/qpp/` - Pre- and post-retrieval QPP metrics
-- `querygym/bert_qpp_results/` - BERT-QPP predictions
+- `querygym/qpp/bert_qpp_results/` - BERT-QPP predictions
 - `querygym/QSDQPP/` - QSDQPP predictions (if available)
 
 This step computes Query Performance Predictions using multiple methods:
@@ -165,7 +165,7 @@ This step computes Query Performance Predictions using multiple methods:
 
 #### 4.3 BERT-QPP Predictions
 
-**Location**: `querygym/bert_qpp_results/`
+**Location**: `querygym/qpp/bert_qpp_results/`
 
 **Methods**:
 - **Cross-Encoder BERT-QPP**: Uses query-document pairs
@@ -269,7 +269,7 @@ cd ..
 python run_bert_qpp.py \
     --queries-dir queries \
     --retrieval-dir retrieval \
-    --output-dir bert_qpp_results
+    --output-dir qpp/bert_qpp_results
 ```
 
 ## Results Summary
