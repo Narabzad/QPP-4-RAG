@@ -59,6 +59,8 @@ This step generates query variants using multiple reformulation methods:
 
 **Scripts**:
 - `querygym/generate_query_files.py` - Generate query files from reformulation data
+- `scripts/generate_query_reformulations.py` - Generate query reformulations using GPT-4o
+- `scripts/filter_all_queries.py` - Filter queries to only those with qrels
 
 ### Step 2: Running RAG on Queries
 
@@ -207,7 +209,11 @@ python retrieve_all_queries.py --k 100
 python retrieve_all_queries_cohere.py --k 100
 
 # Convert to Ragnarok format
-# (Scripts in scripts/ directory)
+python scripts/convert_to_ragnarok_format.py \
+    --queries querygym/queries/topics.original.txt \
+    --results-file querygym/retrieval/run.pyserini.txt \
+    --output-file querygym/rag_prepared/retrieval/ragnarok_format.json \
+    --k 5
 
 # Run RAG generation
 python run_RAG_on_prepared_files.py \
@@ -215,6 +221,13 @@ python run_RAG_on_prepared_files.py \
     --output-dir rag_results/retrieval \
     --model gpt-4o \
     --topk 5
+
+# Run Nuggetizer evaluation
+python scripts/run_nuggetizer_pipeline.py \
+    --ragnarok-dir rag_results/retrieval/ \
+    --nugget-file data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl \
+    --assignments-dir rag_nuggetized_eval/retrieval/assignments/ \
+    --scores-dir rag_nuggetized_eval/retrieval/scores/
 ```
 
 #### Step 3: Run Nuggetizer Evaluation
