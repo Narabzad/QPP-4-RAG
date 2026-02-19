@@ -226,14 +226,12 @@ def convert_trec_style_results(queries_file: str, results_file: str, output_file
     processed_count = 0
     total_queries = len(query_results)
     
-    # RRF files should contain only one query (the ensembled result)
     # Extract query ID from filename and process only that single query
     if args.single_file:
         filename = Path(args.single_file).stem
         # Extract query ID from filename
         parts = filename.split('.')
         if len(parts) >= 3:
-            # run.checkpoint_500.2024-18963_prediction.rrf -> 2024-18963_prediction -> 2024-18963
             query_part = parts[2]
             actual_qid = query_part.split('_')[0]  # Remove _prediction suffix
         else:
@@ -244,17 +242,17 @@ def convert_trec_style_results(queries_file: str, results_file: str, output_file
             print(f"    ⚠️  Query {actual_qid} not found in topics file")
             return
         
-        # Process only the first query group (should be the only one in RRF)
+        # Process only the first query group
         if query_results:
             qid, results = next(iter(query_results.items()))
-            print(f"    📝 Processing single RRF-ensembled query: {actual_qid}")
-            print(f"    📊 Found {len(results)} documents for ensembled query")
+            print(f"    📝 Processing single query: {actual_qid}")
+            print(f"    📊 Found {len(results)} documents for query")
         else:
-            print(f"    ⚠️  No query results found in RRF file")
+            print(f"    ⚠️  No query results found in file")
             return
     else:
         # Batch processing - process all query results
-        print(f"    📝 Processing batch RRF file with {len(query_results)} query groups")
+        print(f"    📝 Processing batch file with {len(query_results)} query groups")
         
         # Process each query group
         for qid, results in query_results.items():
@@ -330,21 +328,11 @@ if __name__ == "__main__":
                        help='Process only a single run file (for testing)')
     parser.add_argument('--k', type=int, default=5,
                        help='Number of top results to convert per query (default: 5)')
-    parser.add_argument('--rrf-dir', type=str, default=None,
-                       help='Directory containing RRF files (default: output_dir/../rrf_results)')
-    
     args = parser.parse_args()
     
     # Create output directory if it doesn't exist
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    
-    # Define run file directories - use provided rrf_dir or default location
-    if args.rrf_dir:
-        rrf_runs_dir = Path(args.rrf_dir)
-    else:
-        # Default: go up one level from rag_prepared to find rrf_results
-        rrf_runs_dir = output_dir.parent / "rrf_results"
     
     # Initialize Pyserini searcher once for reuse
     print("🔍 Initializing Pyserini searcher for document retrieval...")
@@ -367,20 +355,20 @@ if __name__ == "__main__":
         convert_trec_style_results(args.queries, str(run_file), str(output_file), searcher=searcher, k=args.k)
         
     else:
-        # Process all RRF run files
-        print("🔄 Processing all RRF run files...")
+        # Process all run files in the retrieval directory
+        print("🔄 Processing all run files...")
         
-        # Get all RRF run files
-        rrf_files = list(rrf_runs_dir.glob("run.*.rrf.txt"))
+        # Get all run files from the retrieval directory
+        runs_dir = output_dir.parent / "retrieval"
+        if not runs_dir.exists():
+            runs_dir = output_dir.parent / "retrieval_cohere"
         
-        # If no files found in rrf_results, try the parent directory structure
-        if not rrf_files:
-            # Look for RRF files in the parent directory structure
-            rrf_files = list(output_dir.parent.glob("**/rrf_results/run.*.rrf.txt"))
-        
-        all_files = rrf_files
-        print(f"Found {len(rrf_files)} RRF run files")
-        print(f"Total: {len(all_files)} files to process")
+        if runs_dir.exists():
+            all_files = list(runs_dir.glob("run.*.txt"))
+            print(f"Found {len(all_files)} run files")
+        else:
+            print(f"❌ No retrieval directory found. Please specify run files manually.")
+            exit(1)
         print(f"📊 Converting top {args.k} results per query")
         print("   Note: Pyserini searcher already initialized - much faster processing!")
         
