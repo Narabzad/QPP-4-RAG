@@ -22,7 +22,7 @@ This repository is organized into four main pipeline steps:
 │   ├── rag_nuggetized_eval/          # Step 3: Nuggetizer evaluation results
 │   ├── qpp/                          # Step 4: QPP prediction files
 │   │   └── bert_qpp_results/         # Step 4: BERT-QPP predictions
-│   └── [scripts for each step]        # Execution scripts
+│   └── [scripts]                      # Additional scripts for evaluation, analysis, plotting, etc.
 ├── QPP4CS/                           # QPP method implementations
 ├── BERTQPP/                          # BERT-QPP implementation
 └── nuggetizer/                       # Nuggetizer evaluation tool
