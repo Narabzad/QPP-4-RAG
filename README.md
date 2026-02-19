@@ -297,18 +297,10 @@ python run_bert_qpp.py \
 
 3. **Pre-retrieval Efficiency**: Lightweight pre-retrieval predictors frequently match or outperform more expensive post-retrieval methods, offering a latency-efficient approach to robust RAG.
 
-## License
-
-[Specify license]
-
-## Contact
-
-For questions or issues, please open an issue on GitHub or contact the authors.
-
 ## Acknowledgments
 
 This work uses:
-- [Ragnarok](https://github.com/...) for RAG pipeline
-- [Nuggetizer](https://github.com/...) for answer evaluation
+- [Ragnarok](https://github.com/castorini/ragnarok) for RAG pipeline
+- [Nuggetizer](https://github.com/castorini/nuggetizer) for answer evaluation
 - [Pyserini](https://github.com/castorini/pyserini) for retrieval
-- [QPP4CS](https://github.com/...) for QPP implementations
+- [QPP4CS](https://github.com/ChuanMeng/QPP4CS) for QPP implementations
