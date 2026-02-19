@@ -63,9 +63,9 @@ Each method generates 5 different trial sets.
 - Robust Standard Deviation (RSD)
 - QSDQPP predicted nDCG (qsdqpp_predicted_ndcg)
 
-### Supervised QPP
-- BERT-QPP (Cross-Encoder)
-- BERT-QPP (Bi-Encoder)
+### Post-Retrieval QPP (continued)
+- BERT-QPP (Cross-Encoder) - Supervised post-retrieval method
+- BERT-QPP (Bi-Encoder) - Supervised post-retrieval method
 
 ## Evaluation Metrics
 

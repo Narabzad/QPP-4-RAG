@@ -160,27 +160,16 @@ This step computes Query Performance Predictions using multiple methods:
 - `sigma-x0.5`, `sigma-max`: Score distribution statistics
 - `RSD`: Robust Standard Deviation
 - `qsdqpp_predicted_ndcg`: QSDQPP predicted nDCG (also available as post-retrieval)
+- **BERT-QPP**: Cross-Encoder and Bi-Encoder BERT-QPP predictions (located in `querygym/qpp/bert_qpp_results/`)
 
 **File Format**: CSV with columns: `query_id,clarity-score-k100,...`
 
-**Note**: Separate files for each retrieval method (pyserini, cohere)
-
-#### 4.3 BERT-QPP Predictions
-
-**Location**: `querygym/qpp/bert_qpp_results/`
-
-**Methods**:
-- **Cross-Encoder BERT-QPP**: Uses query-document pairs
-- **Bi-Encoder BERT-QPP**: Uses query and document embeddings separately
-
-**Files**:
-- `bert_qpp_scores.json` - JSON format with all predictions
-- `bert_qpp_scores.csv` - CSV format for easy analysis
+**Note**: Separate files for each retrieval method (pyserini, cohere). BERT-QPP predictions are available in JSON and CSV formats in `querygym/qpp/bert_qpp_results/`.
 
 **Scripts**:
 - `querygym/run_bert_qpp.py` - Compute BERT-QPP predictions
 
-#### 4.4 QSDQPP Predictions
+#### 4.3 QSDQPP Predictions
 
 **Location**: `querygym/qpp/QSDQPP/`
 
@@ -192,7 +181,7 @@ This step computes Query Performance Predictions using multiple methods:
 
 **Note**: QSDQPP is a QPP method that predicts nDCG scores. It is available both as a pre-retrieval metric (in pre-retrieval CSV files) and as a post-retrieval metric (in post-retrieval CSV files).
 
-#### 4.5 Other QPP Methods
+#### 4.4 Other QPP Methods
 
 Additional QPP implementations are available in:
 - `QPP4CS/` - Contains implementations of various QPP methods
@@ -259,14 +248,14 @@ python run_pre_retrieval_verbose.py \
     --output-dir . \
     --index msmarco-v2.1-doc-segmented
 
-# Post-retrieval QPP
+# Post-retrieval QPP (including BERT-QPP)
 python run_qpp_querygym.py \
     --queries-dir ../queries \
     --runs-dir ../retrieval \
     --output-dir . \
     --index msmarco-v2.1-doc-segmented
 
-# BERT-QPP
+# BERT-QPP (post-retrieval supervised method)
 cd ..
 python run_bert_qpp.py \
     --queries-dir queries \
