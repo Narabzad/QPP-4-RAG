@@ -161,27 +161,16 @@ This step computes Query Performance Predictions using multiple methods:
 - `RSD`: Robust Standard Deviation
 - `qsdqpp_predicted_ndcg`: QSDQPP predicted nDCG (also available as post-retrieval)
 - **BERT-QPP**: Cross-Encoder and Bi-Encoder BERT-QPP predictions (located in `querygym/qpp/bert_qpp_results/`)
+- **QSDQPP**: QSDQPP predicted nDCG scores (standalone files in `querygym/qpp/QSDQPP/`)
 
-**File Format**: CSV with columns: `query_id,clarity-score-k100,...`
+**File Format**: CSV with columns: `query_id,clarity-score-k100,...` for most methods. QSDQPP also provides standalone TSV files: `topics.{method}_trial{trial}_predicted_ndcg.txt`
 
-**Note**: Separate files for each retrieval method (pyserini, cohere). BERT-QPP predictions are available in JSON and CSV formats in `querygym/qpp/bert_qpp_results/`.
+**Note**: Separate files for each retrieval method (pyserini, cohere). BERT-QPP predictions are available in JSON and CSV formats in `querygym/qpp/bert_qpp_results/`. QSDQPP is available both as a pre-retrieval metric (in pre-retrieval CSV files) and as a post-retrieval metric (in post-retrieval CSV files), with standalone prediction files in `querygym/qpp/QSDQPP/`.
 
 **Scripts**:
 - `querygym/run_bert_qpp.py` - Compute BERT-QPP predictions
 
-#### 4.3 QSDQPP Predictions
-
-**Location**: `querygym/qpp/QSDQPP/`
-
-**Files**:
-- `topics.original_predicted_ndcg.txt`
-- `topics.{method}_trial{trial}_predicted_ndcg.txt` (30 files)
-
-**Format**: TSV with columns: `query_id\tpredicted_ndcg`
-
-**Note**: QSDQPP is a QPP method that predicts nDCG scores. It is available both as a pre-retrieval metric (in pre-retrieval CSV files) and as a post-retrieval metric (in post-retrieval CSV files).
-
-#### 4.4 Other QPP Methods
+#### 4.3 Other QPP Methods
 
 Additional QPP implementations are available in:
 - `QPP4CS/` - Contains implementations of various QPP methods
