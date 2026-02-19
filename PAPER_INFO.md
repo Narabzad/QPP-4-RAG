@@ -48,7 +48,7 @@ Each method generates 5 different trial sets.
 
 ### Pre-Retrieval QPP
 - Query Length (ql)
-- Inverse Document Frequency (IDF-avg, IDF-max, IDF-sum, IDF-std)
+- Inverse Document Frequency (IDF-avg, IDF-max, IDF-sum)
 - Simplified Clarity Query (SCQ-avg, SCQ-max, SCQ-sum)
 - Average Inverse Collection Term Frequency (avgICTF)
 - Simplified Clarity Score (SCS-APX, SCS-FULL)

@@ -204,7 +204,7 @@ python run_pre_retrieval_verbose.py \
 
 **Metrics Included**:
 - `ql`: Query Length
-- `IDF-avg`, `IDF-max`, `IDF-sum`, `IDF-std`
+- `IDF-avg`, `IDF-max`, `IDF-sum`
 - `SCQ-avg`, `SCQ-max`, `SCQ-sum`
 - `avgICTF`
 - `SCS-APX`, `SCS-FULL` (Simplified Clarity Score - approximate and full)

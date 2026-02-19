@@ -96,7 +96,7 @@ This document lists all files that should be included in the repository for repr
 **Total**: 31 CSV files
 
 **Metrics Included**:
-- ql, IDF-avg, IDF-max, IDF-sum, IDF-std
+- ql, IDF-avg, IDF-max, IDF-sum
 - SCQ-avg, SCQ-max, SCQ-sum
 - avgICTF, SCS-APX, SCS-FULL
 

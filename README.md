@@ -140,7 +140,7 @@ This step computes Query Performance Predictions using multiple methods:
 
 **Methods Included**:
 - `ql`: Query Length
-- `IDF-avg`, `IDF-max`, `IDF-sum`, `IDF-std`: Inverse Document Frequency statistics
+- `IDF-avg`, `IDF-max`, `IDF-sum`: Inverse Document Frequency statistics
 - `SCQ-avg`, `SCQ-max`, `SCQ-sum`: Simplified Clarity Query metrics
 - `avgICTF`: Average Inverse Collection Term Frequency
 - `SCS-APX`, `SCS-FULL`: Simplified Clarity Score variants (approximate and full)
