@@ -269,6 +269,9 @@ python run_bert_qpp.py \
 - **Retrieval metrics**: nDCG@5, nDCG@10, MAP, etc.
 - **Generation metrics**: Nugget scores (strict_vital, strict_all, vital, all)
 
+### Oracle Analysis
+Oracle performance analysis measures the best possible performance achievable by selecting query variants based on QPP predictions. See [`querygym/HOW_TO_COMPUTE_ORACLE.md`](querygym/HOW_TO_COMPUTE_ORACLE.md) for detailed instructions on computing oracle results.
+
 ## Key Findings
 
 1. **Utility Gap**: Variants that maximize ranking metrics (nDCG) often fail to produce the best generated answers, exposing a "utility gap" between retrieval relevance and generation fidelity.
