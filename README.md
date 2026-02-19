@@ -203,7 +203,7 @@ Additional QPP implementations are available in:
 1. **Python Environment**: Python 3.8+
 2. **Java**: Required for Pyserini
 3. **API Keys**:
-   - OpenAI API key (set as `SEWON_OPENAI_API_KEY`)
+   - OpenAI API key (set as `OPENAI_API_KEY`)
    - Cohere API key (set as `COHERE_API_KEY` or `CO_API_KEY`)
 
 ### Step-by-Step Reproduction
