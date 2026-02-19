@@ -25,7 +25,6 @@ This repository is organized into four main pipeline steps:
 │   │   └── QSDQPP/                   # Step 4: QSDQPP predictions
 │   └── [scripts]                      # Additional scripts for evaluation, analysis, plotting, etc.
 ├── QPP4CS/                           # QPP method implementations
-├── BERTQPP/                          # BERT-QPP implementation
 └── nuggetizer/                       # Nuggetizer evaluation tool
 ```
 
@@ -176,7 +175,7 @@ This step computes Query Performance Predictions using multiple methods:
 
 Additional QPP implementations are available in:
 - `QPP4CS/` - Contains implementations of various QPP methods
-- `BERTQPP/` - Standalone BERT-QPP implementation
+- `BERTQPP/` - BERT-QPP implementation code (training scripts and models)
 
 ## Reproducing the Results
 
