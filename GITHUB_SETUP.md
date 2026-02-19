@@ -20,7 +20,6 @@ This guide helps you prepare and push the repository to GitHub.
 - [ ] Verify `querygym/rag_prepared/` contains prepared files (31 × 2 = 62 files)
 - [ ] Verify `querygym/rag_results/` contains RAG results (31 × 2 = 62 files)
 - [ ] Include `querygym/run_RAG_on_prepared_files.py` script
-- [ ] Include `scripts/NO_RRF_convert_to_ragnarok_format.py` script
 - [ ] **Exclude RRF results** (as per paper requirements)
 
 ### Step 3: Nuggetizer Evaluation ✅
@@ -74,7 +73,6 @@ git add querygym/queries/*.txt
 
 # Add scripts
 git add querygym/*.py
-git add scripts/NO_RRF_convert_to_ragnarok_format.py
 git add querygym/qpp/*.py
 git add querygym/run_*.py
 

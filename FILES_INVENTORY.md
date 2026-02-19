@@ -60,7 +60,6 @@ This document lists all files that should be included in the repository for repr
 
 ### Scripts
 - `querygym/run_RAG_on_prepared_files.py` - Execute RAG generation
-- `scripts/NO_RRF_convert_to_ragnarok_format.py` - Convert retrieval results to Ragnarok format
 
 ## Step 3: Nuggetizer Evaluation
 

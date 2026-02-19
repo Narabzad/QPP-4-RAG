@@ -106,15 +106,12 @@ python retrieve_all_queries_cohere.py \
 
 ### Step 3: RAG Preparation
 
-**Script**: `scripts/NO_RRF_convert_to_ragnarok_format.py`
+**Script**: Use a conversion script to convert TREC-format retrieval results to Ragnarok format.
 
 ```bash
 # For Pyserini results
-python scripts/NO_RRF_convert_to_ragnarok_format.py \
-    --queries queries/topics.original.txt \
-    --results-file retrieval/run.original.txt \
-    --output-file rag_prepared/retrieval/ragnarok_format_run.original.json \
-    --k 5
+# Convert TREC-format retrieval results to Ragnarok format
+# (Use appropriate conversion script based on your setup)
 
 # Repeat for all 31 query/result pairs
 ```
