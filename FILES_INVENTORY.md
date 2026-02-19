@@ -139,7 +139,7 @@ This document lists all files that should be included in the repository for repr
 - Bi-Encoder BERT-QPP
 
 ### QSDQPP Predictions (if available)
-**Location**: `querygym/QSDQPP/`
+**Location**: `querygym/qpp/QSDQPP/`
 
 - `topics.original_predicted_ndcg.txt`
 - `topics.genqr_trial1_predicted_ndcg.txt` through `topics.genqr_trial5_predicted_ndcg.txt` (5 files)

@@ -21,7 +21,8 @@ This repository is organized into four main pipeline steps:
 │   ├── rag_results/                  # Step 2: RAG generation results
 │   ├── rag_nuggetized_eval/          # Step 3: Nuggetizer evaluation results
 │   ├── qpp/                          # Step 4: QPP prediction files
-│   │   └── bert_qpp_results/         # Step 4: BERT-QPP predictions
+│   │   ├── bert_qpp_results/         # Step 4: BERT-QPP predictions
+│   │   └── QSDQPP/                   # Step 4: QSDQPP predictions
 │   └── [scripts]                      # Additional scripts for evaluation, analysis, plotting, etc.
 ├── QPP4CS/                           # QPP method implementations
 ├── BERTQPP/                          # BERT-QPP implementation
@@ -129,7 +130,7 @@ rag_nuggetized_eval/
 **Locations**:
 - `querygym/qpp/` - Pre- and post-retrieval QPP metrics
 - `querygym/qpp/bert_qpp_results/` - BERT-QPP predictions
-- `querygym/QSDQPP/` - QSDQPP predictions (if available)
+- `querygym/qpp/QSDQPP/` - QSDQPP predictions (if available)
 
 This step computes Query Performance Predictions using multiple methods:
 
@@ -180,7 +181,7 @@ This step computes Query Performance Predictions using multiple methods:
 
 #### 4.4 QSDQPP Predictions
 
-**Location**: `querygym/QSDQPP/`
+**Location**: `querygym/qpp/QSDQPP/`
 
 **Files**:
 - `topics.original_predicted_ndcg.txt`

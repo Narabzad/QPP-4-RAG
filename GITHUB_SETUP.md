@@ -32,7 +32,7 @@ This guide helps you prepare and push the repository to GitHub.
   - 31 pre-retrieval QPP CSV files
   - 62 post-retrieval QPP CSV files (31 × 2 retrieval methods)
 - [ ] Verify `querygym/qpp/bert_qpp_results/` contains BERT-QPP predictions
-- [ ] Verify `querygym/QSDQPP/` contains QSDQPP predictions (31 files)
+- [ ] Verify `querygym/qpp/QSDQPP/` contains QSDQPP predictions (31 files)
 - [ ] Include QPP computation scripts:
   - `querygym/qpp/run_pre_retrieval_verbose.py`
   - `querygym/qpp/run_qpp_querygym.py`
@@ -89,7 +89,7 @@ git add querygym/rag_results/
 git add querygym/rag_nuggetized_eval/
 git add querygym/qpp/*.csv
 git add querygym/qpp/bert_qpp_results/
-git add querygym/QSDQPP/*_predicted_ndcg.txt
+git add querygym/qpp/QSDQPP/*_predicted_ndcg.txt
 
 # Option 2: Use Git LFS for large files (recommended)
 # First install git-lfs, then:
@@ -198,7 +198,7 @@ QPP-4-RAG/
 │   ├── rag_nuggetized_eval/ (124 files)
 │   ├── qpp/ (93 CSV files)
 │   │   └── bert_qpp_results/ (2 files)
-│   ├── QSDQPP/ (31 files)
+│   │   └── QSDQPP/ (31 files)
 │   └── [scripts]
 ├── QPP4CS/
 ├── BERTQPP/
