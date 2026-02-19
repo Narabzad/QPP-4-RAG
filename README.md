@@ -159,6 +159,7 @@ This step computes Query Performance Predictions using multiple methods:
 - `smv-norm-k100`, `smv-no-norm-k100`: Score Magnitude Variance
 - `sigma-x0.5`, `sigma-max`: Score distribution statistics
 - `RSD`: Robust Standard Deviation
+- `qsdqpp_predicted_ndcg`: QSDQPP predicted nDCG (also available as post-retrieval)
 
 **File Format**: CSV with columns: `query_id,clarity-score-k100,...`
 
@@ -189,7 +190,7 @@ This step computes Query Performance Predictions using multiple methods:
 
 **Format**: TSV with columns: `query_id\tpredicted_ndcg`
 
-**Note**: QSDQPP is a pre-retrieval QPP method that predicts nDCG scores.
+**Note**: QSDQPP is a QPP method that predicts nDCG scores. It is available both as a pre-retrieval metric (in pre-retrieval CSV files) and as a post-retrieval metric (in post-retrieval CSV files).
 
 #### 4.5 Other QPP Methods
 

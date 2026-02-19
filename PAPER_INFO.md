@@ -61,6 +61,7 @@ Each method generates 5 different trial sets.
 - Score Magnitude Variance (smv-norm-k100, smv-no-norm-k100)
 - Score Distribution Statistics (sigma-x0.5, sigma-max)
 - Robust Standard Deviation (RSD)
+- QSDQPP predicted nDCG (qsdqpp_predicted_ndcg)
 
 ### Supervised QPP
 - BERT-QPP (Cross-Encoder)

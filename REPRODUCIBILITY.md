@@ -242,6 +242,7 @@ python run_qpp_querygym.py \
 - `smv-norm-k100`, `smv-no-norm-k100`
 - `sigma-x0.5`, `sigma-max`
 - `RSD`
+- `qsdqpp_predicted_ndcg`
 
 #### 6.3 BERT-QPP Predictions
 
