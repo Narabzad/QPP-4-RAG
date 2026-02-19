@@ -98,7 +98,6 @@ rag_results/
 **Scripts**:
 - `querygym/run_RAG_on_prepared_files.py` - Execute RAG generation on prepared files
 
-**Note**: RRF (Reciprocal Rank Fusion) results are **not included** in this repository as per paper requirements.
 
 ### Step 3: Running Nuggetizer Evaluation
 

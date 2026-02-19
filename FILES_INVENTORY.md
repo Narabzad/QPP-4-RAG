@@ -209,7 +209,6 @@ Standalone BERT-QPP implementation with training and inference scripts.
 
 ## Notes
 
-1. **RRF Results**: RRF (Reciprocal Rank Fusion) results are **NOT included** as per paper requirements.
 
 2. **File Formats**:
    - Query files: TSV format (`query_id\tquery_text`)
