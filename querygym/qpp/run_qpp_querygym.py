@@ -3,12 +3,10 @@
 Modular QPP (Query Performance Prediction) script for QueryGym dataset.
 
 This script runs pre-retrieval and post-retrieval QPP metrics on:
-- Query files from: /future/u/negara/home/set_based_QPP/querygym/queries
-- Retrieval results from: 
-  - /future/u/negara/home/set_based_QPP/querygym/retrieval
-  - /future/u/negara/home/set_based_QPP/querygym/retrieval_cohere
+- Query files from: querygym/queries/
+- Retrieval results from: querygym/retrieval/ and querygym/retrieval_cohere/
 
-Results are saved to: /future/u/negara/home/set_based_QPP/querygym/qpp
+Results are saved to: querygym/qpp/
 
 Usage:
     # Run all methods
@@ -28,7 +26,8 @@ Usage:
 """
 
 import sys
-sys.path.append('/future/u/negara/home/set_based_QPP')
+from pathlib import Path as _Path
+sys.path.insert(0, str(_Path(__file__).resolve().parent.parent.parent))
 
 from pyserini.index import LuceneIndexReader
 import json
@@ -800,15 +799,16 @@ Examples:
                        help='Which QPP methods to run: all, pre (pre-retrieval only), or post (post-retrieval only)')
     parser.add_argument('--num_processes', type=int, default=10,
                        help=f'Number of parallel processes per task type (default: 10) - uses subprocess to avoid JVM conflicts')
-    parser.add_argument('--queries_dir', default="/future/u/negara/home/set_based_QPP/querygym/queries",
+    _here = Path(__file__).resolve().parent
+    parser.add_argument('--queries_dir', default=str(_here.parent / "queries"),
                        help='Directory containing query files')
-    parser.add_argument('--retrieval_dirs', nargs='+', 
-                       default=["/future/u/negara/home/set_based_QPP/querygym/retrieval",
-                                "/future/u/negara/home/set_based_QPP/querygym/retrieval_cohere"],
+    parser.add_argument('--retrieval_dirs', nargs='+',
+                       default=[str(_here.parent / "retrieval"),
+                                str(_here.parent / "retrieval_cohere")],
                        help='Directories containing retrieval run files')
     parser.add_argument('--index_path', default="msmarco-v2.1-doc-segmented",
                        help='Pyserini prebuilt index name')
-    parser.add_argument('--output_dir', default="/future/u/negara/home/set_based_QPP/querygym/qpp",
+    parser.add_argument('--output_dir', default=str(_here),
                        help='Output directory for QPP results')
     parser.add_argument('--k_top', type=int, default=100,
                        help='Number of top retrieved items to process (default: 100)')

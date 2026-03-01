@@ -14,12 +14,19 @@ from collections import defaultdict
 # Setup Java environment for Pyserini
 def setup_java_environment():
     """Set up Java environment variables needed for pyserini."""
-    java_home = "/future/u/negara/miniconda3"
-    os.environ["JAVA_HOME"] = java_home
-    
-    jvm_path = "/future/u/negara/miniconda3/lib/server/libjvm.so"
-    if os.path.exists(jvm_path):
-        os.environ["JVM_PATH"] = jvm_path
+    java_home = os.environ.get("JAVA_HOME")
+    if not java_home:
+        print("⚠️  JAVA_HOME not set. Please set it, e.g.: export JAVA_HOME=/path/to/java")
+        return
+
+    jvm_paths = [
+        os.path.join(java_home, "lib", "server", "libjvm.so"),
+        os.path.join(java_home, "lib", "libjvm.so"),
+    ]
+    for jvm_path in jvm_paths:
+        if os.path.exists(jvm_path):
+            os.environ["JVM_PATH"] = jvm_path
+            break
 
 setup_java_environment()
 
@@ -277,14 +284,32 @@ def process_reformulation(query_file, run_file, retriever, ce_model_path, bi_mod
     print(f"  ✅ Completed {method_name} ({retrieval_method}): {processed} queries")
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
-    bert_qpp_dir = Path("/future/u/negara/home/set_based_QPP/BERTQPP")
-    output_dir = base_dir / "bert_qpp_results"
+    import argparse
+    _here = Path(__file__).resolve().parent
+    _repo = _here.parent
+    parser = argparse.ArgumentParser(description='Run BERT-QPP on QueryGym queries')
+    parser.add_argument('--queries-dir', type=str, default=str(_here / "queries"),
+                       help='Directory containing query files')
+    parser.add_argument('--retrieval-dir', type=str, default=str(_here / "retrieval"),
+                       help='Directory containing pyserini retrieval results')
+    parser.add_argument('--retrieval-cohere-dir', type=str, default=str(_here / "retrieval_cohere"),
+                       help='Directory containing Cohere retrieval results')
+    parser.add_argument('--output-dir', type=str, default=str(_here / "bert_qpp_results"),
+                       help='Output directory for BERT-QPP results')
+    parser.add_argument('--ce-model-path', type=str, default=None,
+                       help='Path to cross-encoder model directory')
+    parser.add_argument('--bi-model-path', type=str, default=None,
+                       help='Path to bi-encoder model directory')
+    args = parser.parse_args()
+
+    base_dir = _here
+    bert_qpp_dir = _repo / "BERTQPP"
+    output_dir = Path(args.output_dir)
     output_dir.mkdir(exist_ok=True)
-    
+
     print("🚀 Running BERT-QPP on QueryGym queries...")
     print("="*80)
-    
+
     results = process_all_queries(base_dir, bert_qpp_dir)
     
     # Save results

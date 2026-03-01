@@ -12,30 +12,30 @@ import argparse
 
 def setup_java_environment():
     """Set up Java environment for Pyserini."""
-    java_home = "/future/u/negara/miniconda3"
-    os.environ["JAVA_HOME"] = java_home
-    
-    # Try different possible JVM paths
+    java_home = os.environ.get("JAVA_HOME")
+    if not java_home:
+        print("⚠️  JAVA_HOME not set. Please set it, e.g.: export JAVA_HOME=/path/to/java")
+        return
+
+    # Try to locate libjvm.so under JAVA_HOME
     jvm_paths = [
-        f"{java_home}/lib/server/libjvm.so",
-        f"{java_home}/pkgs/openjdk-21.0.6-h38aa4c6_0/lib/server/libjvm.so",
-        f"{java_home}/envs/pyserini-env/lib/server/libjvm.so",
-        f"{java_home}/envs/py311/lib/server/libjvm.so",
+        os.path.join(java_home, "lib", "server", "libjvm.so"),
+        os.path.join(java_home, "lib", "libjvm.so"),
     ]
-    
+
     jvm_path = None
     for path in jvm_paths:
         if Path(path).exists():
             jvm_path = path
             break
-    
+
     if jvm_path:
         os.environ["JVM_PATH"] = jvm_path
         print(f"✅ Set JVM_PATH to: {jvm_path}")
     else:
-        print("⚠️  Warning: Could not find libjvm.so. Pyserini may not work.")
-    
-    print(f"✅ Set JAVA_HOME to: {java_home}")
+        print("⚠️  Warning: Could not find libjvm.so under JAVA_HOME. Pyserini may not work.")
+
+    print(f"✅ Using JAVA_HOME: {java_home}")
 
 def read_topics_file(topics_file):
     """Read queries from a topics file."""
@@ -133,12 +133,13 @@ def process_query_file(searcher, topics_file, output_dir, k=100):
     return True
 
 def main():
+    _here = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(description='Retrieve documents for all query files using pyserini BM25')
-    parser.add_argument('--queries-dir', type=str, 
-                       default='/future/u/negara/home/set_based_QPP/querygym/queries',
+    parser.add_argument('--queries-dir', type=str,
+                       default=str(_here / "queries"),
                        help='Directory containing query files (default: querygym/queries)')
     parser.add_argument('--output-dir', type=str,
-                       default='/future/u/negara/home/set_based_QPP/querygym/retrieval',
+                       default=str(_here / "retrieval"),
                        help='Output directory for retrieval results (default: querygym/retrieval)')
     parser.add_argument('--k', type=int, default=100,
                        help='Number of documents to retrieve per query (default: 100)')

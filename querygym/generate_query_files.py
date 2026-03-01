@@ -92,20 +92,31 @@ def generate_query_files(json_file, output_dir):
     return files_created
 
 def main():
-    json_file = Path("/future/u/negara/home/set_based_QPP/data/Qgym_reformulation_results.json")
-    output_dir = Path("/future/u/negara/home/set_based_QPP/querygym/queries")
-    
+    import argparse
+    _here = Path(__file__).resolve().parent
+    parser = argparse.ArgumentParser(description='Generate query files from Qgym reformulation results')
+    parser.add_argument('--input', type=str,
+                       default=str(_here.parent / "data" / "Qgym_reformulation_results.json"),
+                       help='Path to reformulation results JSON file')
+    parser.add_argument('--output-dir', type=str,
+                       default=str(_here / "queries"),
+                       help='Output directory for generated query files')
+    args = parser.parse_args()
+
+    json_file = Path(args.input)
+    output_dir = Path(args.output_dir)
+
     if not json_file.exists():
         print(f"❌ JSON file not found: {json_file}")
         return
-    
+
     print("🚀 Generating query files from Qgym reformulation results...")
     print(f"📂 Input: {json_file}")
     print(f"📂 Output: {output_dir}")
     print("=" * 60)
-    
+
     files_created = generate_query_files(json_file, output_dir)
-    
+
     print("\n🎉 Query file generation completed!")
     print(f"📁 Created {len(files_created)} query files")
 

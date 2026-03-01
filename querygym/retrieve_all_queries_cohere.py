@@ -22,9 +22,7 @@ def get_cohere_api_key():
             from dotenv import load_dotenv
             # Try to find .env.local in common locations
             env_paths = [
-                Path('/future/u/negara/home/set_based_QPP/.env.local'),
-                Path('/future/u/negara/home/set_based_QPP/ragnarok/.env.local'),
-                Path(__file__).parent.parent / '.env.local',  # Project root relative to script
+                Path(__file__).resolve().parent.parent / '.env.local',  # Project root relative to script
                 Path('.env.local'),
             ]
             for env_path in env_paths:
@@ -186,15 +184,18 @@ def process_query_file(cohere_index, topics_file, output_dir, k=100):
     return True
 
 def main():
+    _here = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(description='Retrieve documents for all query files using Cohere DiskVectorIndex')
-    parser.add_argument('--queries-dir', type=str, 
-                       default='/future/u/negara/home/set_based_QPP/querygym/queries',
+    parser.add_argument('--queries-dir', type=str,
+                       default=str(_here / "queries"),
                        help='Directory containing query files (default: querygym/queries)')
     parser.add_argument('--output-dir', type=str,
-                       default='/future/u/negara/home/set_based_QPP/querygym/retrieval_cohere',
+                       default=str(_here / "retrieval_cohere"),
                        help='Output directory for retrieval results (default: querygym/retrieval_cohere)')
     parser.add_argument('--k', type=int, default=100,
                        help='Number of documents to retrieve per query (default: 100)')
+    parser.add_argument('--candidate-k', type=int, default=1000,
+                       help='Number of candidate documents to fetch before reranking (default: 1000)')
     parser.add_argument('--index-name', type=str, default='Cohere/trec-rag-2024-index',
                        help='Cohere DiskVectorIndex name (default: Cohere/trec-rag-2024-index)')
     parser.add_argument('--test-file', type=str, default=None,

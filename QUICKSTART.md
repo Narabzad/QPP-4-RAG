@@ -39,7 +39,7 @@ ls querygym/queries/*.txt
 
 ### RAG Results
 ```bash
-# Pyserini results
+# Pyserini results (populated after running the pipeline or available as precomputed data)
 ls querygym/rag_results/retrieval/*.json
 # 31 files
 
@@ -135,9 +135,12 @@ query_id,ql,IDF-avg,IDF-max,clarity-score-k100,...
 
 ## Common Tasks
 
+> **Note**: Run all Python examples below from the repository root directory.
+
 ### 1. Find Best Query Variant for a Query
 
 ```python
+import glob
 import pandas as pd
 import json
 

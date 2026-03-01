@@ -200,19 +200,21 @@ def main():
     # Create log file with timestamp if not provided
     if args.log_file is None:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = f"/future/u/negara/home/set_based_QPP/nuggetizer_log_{timestamp}.txt"
+        log_file = str(Path.cwd() / f"nuggetizer_log_{timestamp}.txt")
     else:
         log_file = args.log_file
-    
+
     log_progress(log_file, "Starting nuggetizer assignment and scoring pipeline...")
-    
+
     # Define paths
+    _scripts_dir = Path(__file__).resolve().parent
+    _repo_dir = _scripts_dir.parent
     ragnarok_dir = Path(args.ragnarok_dir)
     nugget_file = Path(args.nugget_file)
     assignments_dir = Path(args.assignments_dir)
     scores_dir = Path(args.scores_dir)
-    assign_script = Path("/future/u/negara/home/set_based_QPP/scripts/assign_nuggets_incremental.py")
-    score_script = Path("/future/u/negara/home/set_based_QPP/nuggetizer/scripts/calculate_metrics.py")
+    assign_script = _scripts_dir / "assign_nuggets_incremental.py"
+    score_script = _repo_dir / "nuggetizer" / "scripts" / "calculate_metrics.py"
     
     # Verify input files exist
     if not ragnarok_dir.exists():

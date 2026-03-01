@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "QPP-4-RAG: Query Performance Prediction for Retrieval-Augmented Generation"
+abstract: >
+  Code and results for the paper "Can QPP Choose the Right Query Variant?
+  Evaluating Query Variant Selection for RAG Pipelines" (SIGIR 2026).
+  Investigates Query Performance Prediction as a mechanism for selecting
+  the optimal query reformulation in RAG pipelines.
+license: MIT
+date-released: "2026"
+preferred-citation:
+  type: conference-paper
+  title: "Can QPP Choose the Right Query Variant? Evaluating Query Variant Selection for RAG Pipelines"
+  conference:
+    name: "Proceedings of the 49th International ACM SIGIR Conference on Research and Development in Information Retrieval"
+    abbreviation: "SIGIR 2026"
+  year: 2026

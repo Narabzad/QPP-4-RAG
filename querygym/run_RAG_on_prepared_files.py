@@ -13,7 +13,7 @@ import time
 import shutil
 
 # Add ragnarok to path
-sys.path.append('/future/u/negara/home/set_based_QPP/ragnarok/src')
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "ragnarok" / "src"))
 
 from ragnarok.data import read_requests_from_file
 from ragnarok.generate.gpt import SafeOpenai
@@ -21,10 +21,10 @@ from ragnarok.generate.generator import RAG
 from ragnarok.generate.llm import PromptMode
 
 def setup_openai_api_key():
-    """Get OpenAI API key from SEWON_OPENAI_API_KEY environment variable."""
-    api_key = os.getenv("SEWON_OPENAI_API_KEY")
+    """Get OpenAI API key from OPENAI_API_KEY environment variable."""
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        raise ValueError("SEWON_OPENAI_API_KEY environment variable not found")
+        raise ValueError("OPENAI_API_KEY environment variable not found")
     return api_key
 
 def process_single_file_worker(args_tuple):
@@ -166,28 +166,35 @@ def process_directory_in_parallel(input_dir: str, output_dir: str, model_path: s
 
 def main():
     """Main function to run RAG on all prepared files."""
-    
-    # Configuration
-    BASE_DIR = Path("/future/u/negara/home/set_based_QPP/querygym")
-    
-    INPUT_DIRS = [
-        BASE_DIR / "rag_prepared/retrieval_cohere",
-        BASE_DIR / "rag_prepared/retrieval"
-    ]
-    
-    OUTPUT_DIRS = [
-        BASE_DIR / "rag_results/retrieval_cohere",
-        BASE_DIR / "rag_results/retrieval"
-    ]
-    
-    MODEL_NAME = "gpt-4o-mini"
-    TOPK = 3  # Use top 3 documents
-    NUM_WORKERS = 8  # Number of parallel workers
-    
+    import argparse
+    _here = Path(__file__).resolve().parent
+    parser = argparse.ArgumentParser(description='Run RAG on all prepared ragnarok format files')
+    parser.add_argument('--input-dirs', nargs='+',
+                       default=[str(_here / "rag_prepared/retrieval_cohere"),
+                                str(_here / "rag_prepared/retrieval")],
+                       help='Input directories containing prepared JSON files')
+    parser.add_argument('--output-dirs', nargs='+',
+                       default=[str(_here / "rag_results/retrieval_cohere"),
+                                str(_here / "rag_results/retrieval")],
+                       help='Output directories for RAG results')
+    parser.add_argument('--model', type=str, default='gpt-4o',
+                       help='OpenAI model to use (default: gpt-4o)')
+    parser.add_argument('--topk', type=int, default=3,
+                       help='Number of top documents to use for RAG (default: 3)')
+    parser.add_argument('--num-workers', type=int, default=8,
+                       help='Number of parallel workers (default: 8)')
+    args = parser.parse_args()
+
+    INPUT_DIRS = [Path(d) for d in args.input_dirs]
+    OUTPUT_DIRS = [Path(d) for d in args.output_dirs]
+    MODEL_NAME = args.model
+    TOPK = args.topk
+    NUM_WORKERS = args.num_workers
+
     # Check if API key is set
-    if not os.getenv("SEWON_OPENAI_API_KEY"):
-        print("❌ Please set SEWON_OPENAI_API_KEY environment variable")
-        print("Example: export SEWON_OPENAI_API_KEY='your-api-key-here'")
+    if not os.getenv("OPENAI_API_KEY"):
+        print("❌ Please set OPENAI_API_KEY environment variable")
+        print("Example: export OPENAI_API_KEY='your-api-key-here'")
         return
     
     print("=" * 80)

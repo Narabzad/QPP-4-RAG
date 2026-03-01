@@ -440,7 +440,7 @@ def consolidate_data(
     return consolidated
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = Path(__file__).resolve().parent
     
     queries_file = base_dir / "queries" / "topics.original.txt"
     queries_dir = base_dir / "queries"

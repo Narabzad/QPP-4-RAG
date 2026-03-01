@@ -20,17 +20,26 @@ pip install tqdm pandas numpy
 
 ### 2. Java Setup (for Pyserini)
 
+Pyserini requires Java 11+. Install it via your package manager or conda:
+
 ```bash
-# Set Java environment
-export JAVA_HOME=/path/to/java
-export JVM_PATH=$JAVA_HOME/lib/server/libjvm.so
+# Option 1: conda
+conda install -c conda-forge openjdk=21
+
+# Option 2: system package manager (Ubuntu/Debian)
+sudo apt-get install -y openjdk-21-jdk
+
+# Then export JAVA_HOME (adjust path to your installation):
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+# Or, if using conda:
+export JAVA_HOME=$CONDA_PREFIX
 ```
 
 ### 3. API Keys
 
 ```bash
 # OpenAI API key
-export SEWON_OPENAI_API_KEY="your-openai-key"
+export OPENAI_API_KEY="your-openai-key"
 
 # Cohere API key
 export COHERE_API_KEY="your-cohere-key"
@@ -106,14 +115,28 @@ python retrieve_all_queries_cohere.py \
 
 ### Step 3: RAG Preparation
 
-**Script**: Use a conversion script to convert TREC-format retrieval results to Ragnarok format.
+**Script**: `scripts/convert_to_ragnarok_format.py`
 
 ```bash
-# For Pyserini results
-# Convert TREC-format retrieval results to Ragnarok format
-# (Use appropriate conversion script based on your setup)
+# Run from the repository root.
+# Convert each of the 31 retrieval run files to Ragnarok format.
+# Example for pyserini results:
+for run_file in querygym/retrieval/run.*.txt; do
+    python scripts/convert_to_ragnarok_format.py \
+        --queries querygym/queries/topics.original.txt \
+        --single-file "$run_file" \
+        --output-dir querygym/rag_prepared/retrieval \
+        --k 5
+done
 
-# Repeat for all 31 query/result pairs
+# For Cohere results:
+for run_file in querygym/retrieval_cohere/run.*.txt; do
+    python scripts/convert_to_ragnarok_format.py \
+        --queries querygym/queries/topics.original.txt \
+        --single-file "$run_file" \
+        --output-dir querygym/rag_prepared/retrieval_cohere \
+        --k 5
+done
 ```
 
 **Output**:
@@ -127,21 +150,14 @@ python retrieve_all_queries_cohere.py \
 **Script**: `querygym/run_RAG_on_prepared_files.py`
 
 ```bash
-# For Pyserini results
+cd querygym
+# Process all prepared files (both retrieval methods) with default settings
 python run_RAG_on_prepared_files.py \
-    --input-dir rag_prepared/retrieval \
-    --output-dir rag_results/retrieval \
+    --input-dirs rag_prepared/retrieval_cohere rag_prepared/retrieval \
+    --output-dirs rag_results/retrieval_cohere rag_results/retrieval \
     --model gpt-4o \
-    --topk 5 \
-    --num-workers 4
-
-# For Cohere results
-python run_RAG_on_prepared_files.py \
-    --input-dir rag_prepared/retrieval_cohere \
-    --output-dir rag_results/retrieval_cohere \
-    --model gpt-4o \
-    --topk 5 \
-    --num-workers 4
+    --topk 3 \
+    --num-workers 8
 ```
 
 **Output**:
@@ -188,7 +204,7 @@ python run_rag_nuggetizer.py \
 **Script**: `querygym/qpp/run_pre_retrieval_verbose.py`
 
 ```bash
-cd qpp
+cd querygym/qpp
 python run_pre_retrieval_verbose.py \
     --queries-dir ../queries \
     --output-dir . \
@@ -211,21 +227,14 @@ python run_pre_retrieval_verbose.py \
 **Script**: `querygym/qpp/run_qpp_querygym.py`
 
 ```bash
-# For Pyserini results
+cd querygym/qpp
+# Run post-retrieval QPP for both retrieval methods simultaneously
 python run_qpp_querygym.py \
-    --queries-dir ../queries \
-    --runs-dir ../retrieval \
-    --output-dir . \
-    --index msmarco-v2.1-doc-segmented \
-    --retrieval-method pyserini
-
-# For Cohere results
-python run_qpp_querygym.py \
-    --queries-dir ../queries \
-    --runs-dir ../retrieval_cohere \
-    --output-dir . \
-    --index msmarco-v2.1-doc-segmented \
-    --retrieval-method cohere
+    --queries_dir ../queries \
+    --retrieval_dirs ../retrieval ../retrieval_cohere \
+    --output_dir . \
+    --index_path msmarco-v2.1-doc-segmented \
+    --mode post
 ```
 
 **Output**:

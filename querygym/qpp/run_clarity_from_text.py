@@ -5,7 +5,8 @@ This version works with indices that don't have pre-computed document vectors.
 """
 
 import sys
-sys.path.append('/future/u/negara/home/set_based_QPP')
+from pathlib import Path as _Path
+sys.path.insert(0, str(_Path(__file__).resolve().parent.parent.parent))
 
 from pyserini.index import LuceneIndexReader
 import numpy as np
@@ -217,15 +218,16 @@ def main():
     
     parser.add_argument('--num_processes', type=int, default=20,
                        help='Number of parallel processes (default: 20)')
-    parser.add_argument('--queries_dir', default="/future/u/negara/home/set_based_QPP/querygym/queries",
+    _here = _Path(__file__).resolve().parent
+    parser.add_argument('--queries_dir', default=str(_here.parent / "queries"),
                        help='Directory containing query files')
-    parser.add_argument('--retrieval_dirs', nargs='+', 
-                       default=["/future/u/negara/home/set_based_QPP/querygym/retrieval",
-                                "/future/u/negara/home/set_based_QPP/querygym/retrieval_cohere"],
+    parser.add_argument('--retrieval_dirs', nargs='+',
+                       default=[str(_here.parent / "retrieval"),
+                                str(_here.parent / "retrieval_cohere")],
                        help='Directories containing retrieval run files')
     parser.add_argument('--index_path', default="msmarco-v2.1-doc-segmented",
                        help='Pyserini prebuilt index name')
-    parser.add_argument('--output_dir', default="/future/u/negara/home/set_based_QPP/querygym/qpp",
+    parser.add_argument('--output_dir', default=str(_here),
                        help='Output directory for QPP results')
     
     args = parser.parse_args()

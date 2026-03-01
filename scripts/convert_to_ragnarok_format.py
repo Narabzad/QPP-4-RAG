@@ -11,30 +11,29 @@ from typing import List, Dict, Any
 # Set up Java environment before importing pyserini
 def setup_java_environment():
     """Set up Java environment variables needed for pyserini."""
-    # Set JAVA_HOME to miniconda3 Java installation
-    java_home = "/future/u/negara/miniconda3"
-    os.environ["JAVA_HOME"] = java_home
-    
-    # Try to find the correct JVM path
+    java_home = os.environ.get("JAVA_HOME")
+    if not java_home:
+        print("⚠️  JAVA_HOME not set. Please set it, e.g.: export JAVA_HOME=/path/to/java")
+        return
+
     possible_jvm_paths = [
-        "/future/u/negara/miniconda3/lib/server/libjvm.so",
-        "/future/u/negara/miniconda3/pkgs/openjdk-21.0.6-h38aa4c6_0/lib/server/libjvm.so",
-        "/future/u/negara/miniconda3/envs/pyserini-env/lib/server/libjvm.so"
+        os.path.join(java_home, "lib", "server", "libjvm.so"),
+        os.path.join(java_home, "lib", "libjvm.so"),
     ]
-    
+
     jvm_path = None
     for path in possible_jvm_paths:
         if os.path.exists(path):
             jvm_path = path
             break
-    
+
     if jvm_path:
         os.environ["JVM_PATH"] = jvm_path
         print(f"✅ Set JVM_PATH to: {jvm_path}")
     else:
-        print("⚠️  Warning: Could not find libjvm.so. Pyserini may not work.")
-    
-    print(f"✅ Set JAVA_HOME to: {java_home}")
+        print("⚠️  Warning: Could not find libjvm.so under JAVA_HOME. Pyserini may not work.")
+
+    print(f"✅ Using JAVA_HOME: {java_home}")
 
 # Set up Java environment first
 setup_java_environment()
@@ -320,9 +319,10 @@ if __name__ == "__main__":
     
     # Parse command line arguments
     parser = argparse.ArgumentParser(description='Convert TREC-style results to ragnarok format')
-    parser.add_argument('--queries', default="/future/u/negara/home/RAG-Query/topics.rag24.test.txt",
+    _here = Path(__file__).resolve().parent
+    parser.add_argument('--queries', default=str(_here.parent / "querygym" / "queries" / "topics.original.txt"),
                        help='Path to queries file')
-    parser.add_argument('--output-dir', default="/future/u/negara/home/RAG-Query/ragnarok/runs",
+    parser.add_argument('--output-dir', default=str(_here.parent / "querygym" / "rag_prepared"),
                        help='Output directory for ragnarok format files')
     parser.add_argument('--single-file', 
                        help='Process only a single run file (for testing)')

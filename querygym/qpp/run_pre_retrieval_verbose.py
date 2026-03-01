@@ -5,7 +5,9 @@ This helps verify that processing is happening and not stuck.
 """
 
 import sys
-sys.path.append('/future/u/negara/home/set_based_QPP')
+import argparse
+from pathlib import Path as _Path
+sys.path.insert(0, str(_Path(__file__).resolve().parent.parent.parent))
 
 from pyserini.index import LuceneIndexReader
 from collections import Counter
@@ -266,10 +268,22 @@ def process_single_query_file(query_file_path, index_path, output_dir):
         return None
 
 def main():
-    queries_dir = "/future/u/negara/home/set_based_QPP/querygym/queries"
-    index_path = "msmarco-v2.1-doc-segmented"
-    output_dir = "/future/u/negara/home/set_based_QPP/querygym/qpp"
-    
+    _here = _Path(__file__).resolve().parent
+    parser = argparse.ArgumentParser(description='Verbose pre-retrieval QPP processing')
+    parser.add_argument('--queries-dir', type=str,
+                       default=str(_here.parent / "queries"),
+                       help='Directory containing query files')
+    parser.add_argument('--output-dir', type=str,
+                       default=str(_here),
+                       help='Output directory for QPP results')
+    parser.add_argument('--index', type=str, default='msmarco-v2.1-doc-segmented',
+                       help='Pyserini prebuilt index name')
+    args = parser.parse_args()
+
+    queries_dir = args.queries_dir
+    index_path = args.index
+    output_dir = args.output_dir
+
     # Get all query files
     query_files = glob.glob(os.path.join(queries_dir, "topics.*.txt"))
     query_files.sort()

@@ -7,7 +7,7 @@ We adopt two architechtures namely cross-encoder network and bi-encoder network 
 To replicate our results  with BERT-QPP<sub>cross</sub> and BERT-QPP<sub>bi</sub> on MSMARCO passage collection,
 
  1. Clone this repository.
- 2. Install the required packages are listed in ```requirement.txt``` on python 3.7+. 
+ 2. Install the required packages listed in ```requirements.txt``` on Python 3.7+.
  3. Download [MSMARCO collection](https://msmarco.blob.core.windows.net/msmarcoranking/collectionandqueries.tar.gz) ```collection.tsv``` and store it in ```collection``` repository.
  4. If you are willing to predict the performance of BM25 retrieval method on MSMARCO, skip this step. Otherwise, when evaluating any other retrieval method, you need to prepare the similar run file to ```bm25_first_docs_train.tsv``` and ```bm25_first_docs_dev.tsv``` which include the run file for first retrieved documents for queries in MSMARCO train and dev set. 
     * The runfile of your desired retrieval approach should havethe folloinwg format for each query per line:  ```QID<\t>DOCID<\t>1```. 

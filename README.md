@@ -15,17 +15,31 @@ This repository is organized into four main pipeline steps:
 ```
 .
 ├── README.md                          # This file
+├── REPRODUCIBILITY.md                 # Full pipeline reproduction instructions
+├── QUICKSTART.md                      # Quick access to precomputed results
+├── requirements.txt                   # Python dependencies
 ├── querygym/                          # Main experimental directory
-│   ├── queries/                      # Step 1: Query generation results
-│   ├── rag_prepared/                 # Step 2: RAG prepared files
-│   ├── rag_results/                  # Step 2: RAG generation results
-│   ├── rag_nuggetized_eval/          # Step 3: Nuggetizer evaluation results
-│   ├── qpp/                          # Step 4: QPP prediction files
-│   │   ├── bert_qpp_results/         # Step 4: BERT-QPP predictions
-│   │   └── QSDQPP/                   # Step 4: QSDQPP predictions
-│   └── [scripts]                      # Additional scripts for evaluation, analysis, plotting, etc.
-├── QPP4CS/                           # QPP method implementations
-└── nuggetizer/                       # Nuggetizer evaluation tool
+│   ├── queries/                       # Step 1: Query generation results (31 files)
+│   ├── retrieval/                     # Step 2a: Pyserini BM25 retrieval results
+│   ├── retrieval_cohere/              # Step 2b: Cohere retrieval results
+│   ├── rag_prepared/                  # Step 3: RAG prepared files (Ragnarok format)
+│   ├── rag_results/                   # Step 4: RAG generation results
+│   ├── rag_nuggetized_eval/           # Step 5: Nuggetizer evaluation results
+│   ├── qpp/                           # Step 6: QPP prediction files
+│   │   ├── bert_qpp_results/          # BERT-QPP predictions
+│   │   └── QSDQPP/                    # QSDQPP predictions
+│   ├── generate_query_files.py        # Generate query files from reformulation data
+│   ├── retrieve_all_queries.py        # Pyserini BM25 retrieval
+│   ├── retrieve_all_queries_cohere.py # Cohere retrieval
+│   ├── run_RAG_on_prepared_files.py   # RAG generation
+│   ├── run_bert_qpp.py                # BERT-QPP predictions
+│   └── consolidate_query_data.py      # Consolidate all results
+├── scripts/                           # Pipeline utility scripts
+│   ├── convert_to_ragnarok_format.py  # Convert TREC results to Ragnarok format
+│   └── run_nuggetizer_pipeline.py     # Run nuggetizer evaluation
+├── QPP4CS/                            # QPP method implementations
+├── BERTQPP/                           # BERT-QPP implementation and models
+└── nuggetizer/                        # Nuggetizer evaluation tool
 ```
 
 ## Pipeline Overview
@@ -200,67 +214,71 @@ This generates all query variant files in `queries/` directory.
 #### Step 2: Run Retrieval and RAG
 
 ```bash
-# Retrieve documents (Pyserini)
+# Run from the repository root.
+
+# Retrieve documents (Pyserini BM25)
+cd querygym
 python retrieve_all_queries.py --k 100
 
 # Retrieve documents (Cohere)
 python retrieve_all_queries_cohere.py --k 100
 
-# Convert to Ragnarok format
-python scripts/convert_to_ragnarok_format.py \
-    --queries querygym/queries/topics.original.txt \
-    --results-file querygym/retrieval/run.pyserini.txt \
-    --output-file querygym/rag_prepared/retrieval/ragnarok_format.json \
-    --k 5
+# Convert all 31 run files to Ragnarok format (pyserini)
+cd ..
+for run_file in querygym/retrieval/run.*.txt; do
+    python scripts/convert_to_ragnarok_format.py \
+        --queries querygym/queries/topics.original.txt \
+        --single-file "$run_file" \
+        --output-dir querygym/rag_prepared/retrieval \
+        --k 5
+done
 
 # Run RAG generation
+cd querygym
 python run_RAG_on_prepared_files.py \
-    --input-dir rag_prepared/retrieval \
-    --output-dir rag_results/retrieval \
+    --input-dirs rag_prepared/retrieval_cohere rag_prepared/retrieval \
+    --output-dirs rag_results/retrieval_cohere rag_results/retrieval \
     --model gpt-4o \
-    --topk 5
-
-# Run Nuggetizer evaluation
-python scripts/run_nuggetizer_pipeline.py \
-    --ragnarok-dir rag_results/retrieval/ \
-    --nugget-file data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl \
-    --assignments-dir rag_nuggetized_eval/retrieval/assignments/ \
-    --scores-dir rag_nuggetized_eval/retrieval/scores/
+    --topk 3 \
+    --num-workers 8
 ```
 
 #### Step 3: Run Nuggetizer Evaluation
 
 ```bash
-python run_rag_nuggetizer.py \
-    --rag-results-dir rag_results/retrieval \
+cd ..
+python scripts/run_nuggetizer_pipeline.py \
+    --ragnarok-dir querygym/rag_results/retrieval/ \
     --nugget-file data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl \
-    --output-dir rag_nuggetized_eval/retrieval \
-    --model gpt-4o
+    --assignments-dir querygym/rag_nuggetized_eval/retrieval/assignments/ \
+    --scores-dir querygym/rag_nuggetized_eval/retrieval/scores/
 ```
 
 #### Step 4: Compute QPP Predictions
 
 ```bash
 # Pre-retrieval QPP
-cd qpp
+cd querygym/qpp
 python run_pre_retrieval_verbose.py \
     --queries-dir ../queries \
     --output-dir . \
     --index msmarco-v2.1-doc-segmented
 
-# Post-retrieval QPP (including BERT-QPP)
+# Post-retrieval QPP
 python run_qpp_querygym.py \
-    --queries-dir ../queries \
-    --runs-dir ../retrieval \
-    --output-dir . \
-    --index msmarco-v2.1-doc-segmented
+    --queries_dir ../queries \
+    --retrieval_dirs ../retrieval ../retrieval_cohere \
+    --output_dir . \
+    --index_path msmarco-v2.1-doc-segmented \
+    --mode post
 
 # BERT-QPP (post-retrieval supervised method)
 cd ..
 python run_bert_qpp.py \
     --queries-dir queries \
     --retrieval-dir retrieval \
-    --output-dir qpp/bert_qpp_results
+    --retrieval-cohere-dir retrieval_cohere \
+    --output-dir bert_qpp_results
 ```
 
 ## Results Summary
@@ -290,6 +308,23 @@ Oracle performance analysis measures the best possible performance achievable by
 2. **QPP Effectiveness**: QPP can reliably identify variants that improve end-to-end answer quality over the original query.
 
 3. **Pre-retrieval Efficiency**: Lightweight pre-retrieval predictors frequently match or outperform more expensive post-retrieval methods, offering a latency-efficient approach to robust RAG.
+
+## Precomputed Results
+
+Precomputed results for all experiments are available directly in this repository, so you do not need to re-run the full pipeline to access the data:
+
+- **Query files** (31 variants): `querygym/queries/`
+- **Retrieval results** (Pyserini BM25): `querygym/retrieval/`
+- **Retrieval results** (Cohere): `querygym/retrieval_cohere/`
+- **RAG prepared files**: `querygym/rag_prepared/`
+- **RAG generation results**: `querygym/rag_results/`
+- **Nuggetizer evaluation scores**: `querygym/rag_nuggetized_eval/`
+- **QPP predictions** (pre- and post-retrieval): `querygym/qpp/`
+- **BERT-QPP predictions**: `querygym/qpp/bert_qpp_results/`
+- **QSDQPP predictions**: `querygym/qpp/QSDQPP/`
+- **Consolidated query data**: `querygym/consolidated_query_data.json`
+
+See `QUICKSTART.md` for quick access to these results.
 
 ## Acknowledgments
 
