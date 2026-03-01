@@ -160,17 +160,6 @@ Based on the results in `qpp_oracle_analysis/`:
 3. **Retrieval Method Matters**: Cohere retrieval shows better oracle performance than Pyserini
 4. **Utility Gap**: Oracle performance shows significant improvement potential over mean performance
 
-## Troubleshooting
-
-### Issue: "No QPP metrics found"
-**Solution**: Ensure QPP predictions have been computed and added to consolidated data
-
-### Issue: "Missing nugget scores"
-**Solution**: Run nuggetizer evaluation first, then regenerate consolidated data
-
-### Issue: "Empty results"
-**Solution**: Check that consolidated data contains both QPP metrics and performance scores
-
 ## Related Files
 
 - `querygym/analyze_qpp_oracle_performance.py` - Main oracle analysis script
