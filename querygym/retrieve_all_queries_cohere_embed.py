@@ -10,6 +10,8 @@ from pathlib import Path
 import time
 import argparse
 
+_REPO = Path(__file__).resolve().parent.parent
+
 
 def get_cohere_api_key():
     """Get Cohere API key from environment variable or .env.local file."""
@@ -22,8 +24,8 @@ def get_cohere_api_key():
             from dotenv import load_dotenv
             # Try to find .env.local in common locations
             env_paths = [
-                Path('/future/u/negara/home/set_based_QPP/.env.local'),
-                Path('/future/u/negara/home/set_based_QPP/ragnarok/.env.local'),
+                _REPO / '.env.local',
+                _REPO / 'ragnarok/.env.local',
                 Path(__file__).parent.parent / '.env.local',  # Project root relative to script
                 Path('.env.local'),
             ]
@@ -168,11 +170,11 @@ def process_query_file(cohere_index, topics_file, output_dir, k=100):
 
 def main():
     parser = argparse.ArgumentParser(description='Retrieve documents for all query files using Cohere embed API')
-    parser.add_argument('--queries-dir', type=str, 
-                       default='/future/u/negara/home/set_based_QPP/querygym/queries',
+    parser.add_argument('--queries-dir', type=str,
+                       default=str(_REPO / 'querygym/queries'),
                        help='Directory containing query files (default: querygym/queries)')
     parser.add_argument('--output-dir', type=str,
-                       default='/future/u/negara/home/set_based_QPP/querygym/retrieval_cohere',
+                       default=str(_REPO / 'querygym/retrieval_cohere'),
                        help='Output directory for retrieval results (default: querygym/retrieval_cohere)')
     parser.add_argument('--k', type=int, default=100,
                        help='Number of documents to retrieve per query (default: 100)')

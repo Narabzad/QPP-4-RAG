@@ -12,6 +12,8 @@ from pathlib import Path
 from collections import defaultdict
 import statistics
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def collect_scores_from_folder(folder_path):
     """Collect all scores from a single folder."""
     scores_dir = folder_path / "nuggetizer" / "scores"
@@ -39,11 +41,11 @@ def collect_scores_from_folder(folder_path):
 
 def main():
     parser = argparse.ArgumentParser(description='Aggregate nuggetizer scores across all prediction folders')
-    parser.add_argument('--predictions-dir', type=str, 
-                       default="/future/u/negara/home/set_based_QPP/predictions",
+    parser.add_argument('--predictions-dir', type=str,
+                       default=str(_REPO / "predictions"),
                        help='Base predictions directory')
     parser.add_argument('--output-csv', type=str,
-                       default="/future/u/negara/home/set_based_QPP/nuggetizer_scores_summary.csv",
+                       default=str(_REPO / "nuggetizer_scores_summary.csv"),
                        help='Output CSV file path')
     parser.add_argument('--folders', nargs='*', default=None,
                        help='Process only these specific folder names (default: all folders)')

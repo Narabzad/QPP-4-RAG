@@ -12,8 +12,10 @@ import multiprocessing as mp
 from pathlib import Path
 from tqdm import tqdm
 
+_REPO = Path(__file__).resolve().parent.parent
+
 # Add ragnarok to path
-sys.path.append('/future/u/negara/home/set_based_QPP/ragnarok/src')
+sys.path.insert(0, str(_REPO / 'ragnarok/src'))
 
 from ragnarok.data import Query
 from ragnarok.generate.gpt import SafeOpenai
@@ -231,13 +233,13 @@ def main():
     parser.add_argument(
         '--input-dir',
         type=str,
-        default='/future/u/negara/home/set_based_QPP/querygym/rag_results/retrieval',
+        default=str(_REPO / 'querygym/rag_results/retrieval'),
         help='Directory containing RAG result files'
     )
     parser.add_argument(
         '--output-dir',
         type=str,
-        default='/future/u/negara/home/set_based_QPP/querygym/rag_results_o',
+        default=str(_REPO / 'querygym/rag_results_o'),
         help='Output directory for generation-only results'
     )
     parser.add_argument(

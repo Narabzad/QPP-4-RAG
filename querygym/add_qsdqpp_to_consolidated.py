@@ -8,10 +8,12 @@ import os
 from pathlib import Path
 from tqdm import tqdm
 
+_REPO = Path(__file__).resolve().parent.parent
+
 # Paths
-QSDQPP_DIR = "/future/u/negara/home/set_based_QPP/querygym/QSDQPP"
-CONSOLIDATED_FILE = "/future/u/negara/home/set_based_QPP/querygym/consolidated_query_data.json"
-OUTPUT_FILE = "/future/u/negara/home/set_based_QPP/querygym/consolidated_query_data.json"
+QSDQPP_DIR = str(_REPO / "querygym/QSDQPP")
+CONSOLIDATED_FILE = str(_REPO / "querygym/consolidated_query_data.json")
+OUTPUT_FILE = str(_REPO / "querygym/consolidated_query_data.json")
 
 def load_qsdqpp_scores(qsdqpp_file):
     """Load QSDQPP predicted nDCG scores from a file."""

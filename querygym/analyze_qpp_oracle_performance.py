@@ -10,6 +10,8 @@ import numpy as np
 from pathlib import Path
 from collections import defaultdict
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def load_consolidated_data(json_file):
     """Load the consolidated query data."""
     with open(json_file, 'r', encoding='utf-8') as f:
@@ -639,7 +641,7 @@ def analyze_generationonly_oracle_performance(data):
     return pd.DataFrame(results)
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     json_file = base_dir / "consolidated_query_data.json"
     output_dir = base_dir / "qpp_oracle_analysis"
     output_dir.mkdir(exist_ok=True)

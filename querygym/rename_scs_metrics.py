@@ -6,6 +6,8 @@ Rename SCS-1 to SCS-apx and SCS-2 to SCS-full in consolidated_query_data.json
 import json
 from pathlib import Path
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def rename_scs_metrics(data):
     """Rename SCS-1 to SCS-apx and SCS-2 to SCS-full"""
     renamed_count = 0
@@ -29,7 +31,7 @@ def rename_scs_metrics(data):
     return renamed_count
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     json_file = base_dir / "consolidated_query_data.json"
     
     print("="*80)

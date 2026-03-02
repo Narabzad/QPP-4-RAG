@@ -6,8 +6,10 @@ Create simplified summary CSV files with just the mean performance metrics.
 import pandas as pd
 from pathlib import Path
 
+_REPO = Path(__file__).resolve().parent.parent.parent
+
 def create_simplified_summary():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym/qpp_oracle_analysis")
+    base_dir = _REPO / "querygym/qpp_oracle_analysis"
     
     # Read the detailed CSV files
     df_pyserini = pd.read_csv(base_dir / "qpp_oracle_performance_pyserini.csv")

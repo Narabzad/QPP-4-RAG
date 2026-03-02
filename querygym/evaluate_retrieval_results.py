@@ -8,6 +8,8 @@ import sys
 from pathlib import Path
 import argparse
 
+_REPO = Path(__file__).resolve().parent.parent
+
 try:
     import pytrec_eval
 except ImportError:
@@ -86,19 +88,19 @@ def get_run_name_from_file(run_file):
 def main():
     parser = argparse.ArgumentParser(description='Evaluate retrieval results from BM25 and Cohere')
     parser.add_argument('--raggy-qrels', type=str,
-                       default='/future/u/negara/home/set_based_QPP/data/qrels.rag24.raggy-dev.txt',
+                       default=str(_REPO / 'data/qrels.rag24.raggy-dev.txt'),
                        help='Path to raggy-dev qrels file')
     parser.add_argument('--umbrella-qrels', type=str,
-                       default='/future/u/negara/home/set_based_QPP/data/qrels.rag24.umbrella.txt',
+                       default=str(_REPO / 'data/qrels.rag24.umbrella.txt'),
                        help='Path to umbrella qrels file')
     parser.add_argument('--retrieval-dir', type=str,
-                       default='/future/u/negara/home/set_based_QPP/querygym/retrieval',
+                       default=str(_REPO / 'querygym/retrieval'),
                        help='Directory with BM25 (pyserini) run files')
     parser.add_argument('--cohere-dir', type=str,
-                       default='/future/u/negara/home/set_based_QPP/querygym/retrieval_cohere',
+                       default=str(_REPO / 'querygym/retrieval_cohere'),
                        help='Directory with Cohere run files')
     parser.add_argument('--output', type=str,
-                       default='/future/u/negara/home/set_based_QPP/querygym/evaluation_results.txt',
+                       default=str(_REPO / 'querygym/evaluation_results.txt'),
                        help='Output file for evaluation results')
     
     args = parser.parse_args()

@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 from collections import defaultdict
 
+_REPO = Path(__file__).resolve().parent.parent
+
 
 def load_generation_only_scores(scores_dir):
     """Load all generation-only nugget scores from score files."""
@@ -118,7 +120,7 @@ def add_generation_only_to_consolidated(consolidated_file, generation_only_score
 
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     
     consolidated_file = base_dir / "consolidated_query_data.json"
     scores_dir = base_dir / "rag_nuggetized_eval_o" / "scores"

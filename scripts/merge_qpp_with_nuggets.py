@@ -8,6 +8,8 @@ import os
 from pathlib import Path
 from tqdm import tqdm
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def load_nugget_scores(scores_file):
     """Load nugget scores from JSONL file."""
     scores = {}
@@ -113,7 +115,7 @@ def find_matching_score_file(qpp_file):
     else:
         return None
     
-    scores_dir = Path("/future/u/negara/home/set_based_QPP/nuggetizer/results/scores")
+    scores_dir = _REPO / "nuggetizer/results/scores"
     score_file = scores_dir / score_filename
     
     if score_file.exists():
@@ -130,8 +132,8 @@ def find_matching_score_file(qpp_file):
 
 def main():
     # Define paths
-    qpp_results_dir = Path("/future/u/negara/home/set_based_QPP/qpp_results")
-    output_dir = Path("/future/u/negara/home/set_based_QPP/qpp_results_with_nuggets")
+    qpp_results_dir = _REPO / "qpp_results"
+    output_dir = _REPO / "qpp_results_with_nuggets"
     
     # Create output directory
     output_dir.mkdir(exist_ok=True)

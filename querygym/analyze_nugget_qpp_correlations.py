@@ -11,6 +11,8 @@ from scipy.stats import pearsonr, spearmanr
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def load_consolidated_data(json_file):
     """Load the consolidated query data."""
     with open(json_file, 'r', encoding='utf-8') as f:
@@ -196,7 +198,7 @@ def create_scatter_plots(df, nugget_cols, qpp_cols, method_name, output_dir, top
     print(f"  ✅ Saved scatter plots: {output_file}")
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     json_file = base_dir / "consolidated_query_data.json"
     output_dir = base_dir / "correlation_analysis"
     output_dir.mkdir(exist_ok=True)

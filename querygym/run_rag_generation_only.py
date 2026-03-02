@@ -13,8 +13,10 @@ from pathlib import Path
 from tqdm import tqdm
 import shutil
 
+_REPO = Path(__file__).resolve().parent.parent
+
 # Add ragnarok to path
-sys.path.append('/future/u/negara/home/set_based_QPP/ragnarok/src')
+sys.path.insert(0, str(_REPO / 'ragnarok/src'))
 
 from ragnarok.data import read_requests_from_file, Request, Query
 from ragnarok.generate.gpt import SafeOpenai
@@ -227,13 +229,13 @@ def main():
     parser.add_argument(
         '--input-dir',
         type=str,
-        default='/future/u/negara/home/set_based_QPP/querygym/rag_results',
+        default=str(_REPO / 'querygym/rag_results'),
         help='Base directory containing retrieval and retrieval_cohere folders'
     )
     parser.add_argument(
         '--output-dir',
         type=str,
-        default='/future/u/negara/home/set_based_QPP/querygym/rag_results_o',
+        default=str(_REPO / 'querygym/rag_results_o'),
         help='Output directory for generation-only results'
     )
     parser.add_argument(
@@ -325,14 +327,14 @@ def main():
         from run_rag_nuggetizer import run_nugget_assignment, run_scoring, log_progress
         from datetime import datetime
         
-        nugget_file = "/future/u/negara/home/set_based_QPP/data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl"
-        output_eval_dir = Path("/future/u/negara/home/set_based_QPP/querygym/rag_nuggetized_eval_o")
-        
+        nugget_file = str(_REPO / "data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl")
+        output_eval_dir = _REPO / "querygym/rag_nuggetized_eval_o"
+
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = Path("/future/u/negara/home/set_based_QPP/querygym") / f"rag_generation_only_nuggetizer_log_{timestamp}.txt"
-        
-        assign_script = Path("/future/u/negara/home/set_based_QPP/nuggetizer/scripts/assign_nuggets.py")
-        score_script = Path("/future/u/negara/home/set_based_QPP/nuggetizer/scripts/calculate_metrics.py")
+        log_file = _REPO / "querygym" / f"rag_generation_only_nuggetizer_log_{timestamp}.txt"
+
+        assign_script = _REPO / "nuggetizer/scripts/assign_nuggets.py"
+        score_script = _REPO / "nuggetizer/scripts/calculate_metrics.py"
         
         # Process retrieval folder
         if retrieval_output.exists():

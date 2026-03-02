@@ -13,6 +13,8 @@ from pathlib import Path
 from collections import defaultdict
 import torch
 
+_REPO = Path(__file__).resolve().parent.parent
+
 # Try to import required libraries
 try:
     from transformers import BertTokenizer, BertModel, AutoTokenizer, AutoModel
@@ -251,7 +253,7 @@ def process_all_queries(base_dir, output_file):
 
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     output_file = base_dir / "qpp" / "rv_scores.json"
     
     results = process_all_queries(base_dir, output_file)

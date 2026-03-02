@@ -6,6 +6,8 @@ Remove k1000 metrics from post-retrieval QPP metrics in consolidated_query_data.
 import json
 from pathlib import Path
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def remove_k1000_metrics(data):
     """Remove all k1000 metrics from post-retrieval QPP metrics"""
     removed_count = 0
@@ -34,7 +36,7 @@ def remove_k1000_metrics(data):
     return removed_count
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     json_file = base_dir / "consolidated_query_data.json"
     
     print("="*80)

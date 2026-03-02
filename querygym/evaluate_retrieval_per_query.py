@@ -10,6 +10,8 @@ import argparse
 import json
 from tqdm import tqdm
 
+_REPO = Path(__file__).resolve().parent.parent
+
 try:
     import pytrec_eval
 except ImportError:
@@ -93,16 +95,16 @@ def get_run_name_from_file(run_file):
 def main():
     parser = argparse.ArgumentParser(description='Evaluate retrieval results per query')
     parser.add_argument('--qrels', type=str,
-                       default='/future/u/negara/home/set_based_QPP/data/qrels.rag24.raggy-dev.txt',
+                       default=str(_REPO / 'data/qrels.rag24.raggy-dev.txt'),
                        help='Path to qrels file')
     parser.add_argument('--retrieval-dir', type=str,
-                       default='/future/u/negara/home/set_based_QPP/querygym/retrieval',
+                       default=str(_REPO / 'querygym/retrieval'),
                        help='Directory with BM25 (pyserini) run files')
     parser.add_argument('--cohere-dir', type=str,
-                       default='/future/u/negara/home/set_based_QPP/querygym/retrieval_cohere',
+                       default=str(_REPO / 'querygym/retrieval_cohere'),
                        help='Directory with Cohere run files')
     parser.add_argument('--output-dir', type=str,
-                       default='/future/u/negara/home/set_based_QPP/querygym/retrieval_eval',
+                       default=str(_REPO / 'querygym/retrieval_eval'),
                        help='Output directory for evaluation results')
     
     args = parser.parse_args()

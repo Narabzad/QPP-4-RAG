@@ -17,6 +17,8 @@ from pathlib import Path
 from scipy.stats import pearsonr, kendalltau
 from collections import defaultdict
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def load_consolidated_data(json_file):
     """Load the consolidated query data."""
     with open(json_file, 'r', encoding='utf-8') as f:
@@ -301,7 +303,7 @@ def calculate_generationonly_correlations(data, qpp_metric_name):
     return result
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     json_file = base_dir / "consolidated_query_data.json"
     output_dir = base_dir / "qpp_oracle_analysis"
     output_dir.mkdir(exist_ok=True)

@@ -7,9 +7,11 @@ import os
 import json
 from pathlib import Path
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def load_qrels_queries():
     """Load the list of query IDs that have qrels."""
-    qrels_file = "/future/u/negara/home/set_based_QPP/data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl"
+    qrels_file = str(_REPO / "data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl")
     qrels_qids = set()
     
     with open(qrels_file, 'r', encoding='utf-8') as f:
@@ -47,8 +49,8 @@ def main():
     print("=" * 50)
     
     # Setup directories
-    queries_dir = Path("/future/u/negara/home/set_based_QPP/data/query_reformulation/queries")
-    output_dir = Path("/future/u/negara/home/set_based_QPP/multi_variation_results/temp_filtered_queries")
+    queries_dir = _REPO / "data/query_reformulation/queries"
+    output_dir = _REPO / "multi_variation_results/temp_filtered_queries"
     
     # Create output directory
     output_dir.mkdir(parents=True, exist_ok=True)

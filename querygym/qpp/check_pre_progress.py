@@ -2,13 +2,17 @@
 """Quick test to see how long pre-retrieval actually takes"""
 
 import sys
-sys.path.append('/future/u/negara/home/set_based_QPP')
+from pathlib import Path
+
+_REPO = Path(__file__).resolve().parent.parent.parent
+
+sys.path.insert(0, str(_REPO))
 
 from pyserini.index import LuceneIndexReader
 import time
 
 # Test with topics.original.txt
-query_file = "/future/u/negara/home/set_based_QPP/querygym/queries/topics.original.txt"
+query_file = str(_REPO / "querygym/queries/topics.original.txt")
 index_path = "msmarco-v2.1-doc-segmented"
 
 print("Loading index...")

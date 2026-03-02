@@ -9,6 +9,8 @@ import numpy as np
 from pathlib import Path
 from matplotlib.backends.backend_pdf import PdfPages
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def create_scatter_plot(df, retrieval_method, ax, show_legend=True):
     """Create scatter plot showing NDCG@5 vs nugget all score."""
     
@@ -100,7 +102,7 @@ def create_scatter_plot(df, retrieval_method, ax, show_legend=True):
 
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     oracle_dir = base_dir / "qpp_oracle_analysis"
     
     # Load data

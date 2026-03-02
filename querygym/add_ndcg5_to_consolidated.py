@@ -6,6 +6,8 @@ Add ndcg_cut_5 (ndcg@5) to consolidated_query_data.json from retrieval_eval file
 import json
 from pathlib import Path
 
+_REPO = Path(__file__).resolve().parent.parent
+
 
 def load_retrieval_metrics_with_ndcg5(jsonl_file):
     """Load retrieval metrics including ndcg@5 from JSONL file."""
@@ -119,7 +121,7 @@ def add_ndcg5_to_consolidated(consolidated_file, retrieval_eval_dir, output_file
 
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     
     consolidated_file = base_dir / "consolidated_query_data.json"
     retrieval_eval_dir = base_dir / "retrieval_eval"

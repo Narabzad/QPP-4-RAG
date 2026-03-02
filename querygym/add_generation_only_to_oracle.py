@@ -8,6 +8,8 @@ import json
 from pathlib import Path
 import numpy as np
 
+_REPO = Path(__file__).resolve().parent.parent
+
 
 def calculate_generation_only_performance(consolidated_file):
     """Calculate average performance for generation-only across all reformulations."""
@@ -79,7 +81,7 @@ def add_generation_only_row(csv_file, generation_only_row):
 
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     
     consolidated_file = base_dir / "consolidated_query_data.json"
     oracle_dir = base_dir / "qpp_oracle_analysis"

@@ -4,9 +4,12 @@ Move QSDQPP scores from qpp_metrics to pre_retrieval_qpp_metrics
 """
 
 import json
+from pathlib import Path
 from tqdm import tqdm
 
-CONSOLIDATED_FILE = "/future/u/negara/home/set_based_QPP/querygym/consolidated_query_data.json"
+_REPO = Path(__file__).resolve().parent.parent
+
+CONSOLIDATED_FILE = str(_REPO / "querygym/consolidated_query_data.json")
 
 def main():
     print("="*80)

@@ -14,6 +14,8 @@ from pathlib import Path
 from tqdm import tqdm
 from nuggetizer.core.metrics import calculate_nugget_scores
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def log_progress(log_file, message):
     """Write progress message to log file with timestamp."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -378,14 +380,14 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description='Run nuggetizer assignment and scoring for RAG results')
-    parser.add_argument('--rag-results-dir', type=str, 
-                       default='/future/u/negara/home/set_based_QPP/querygym/rag_results',
+    parser.add_argument('--rag-results-dir', type=str,
+                       default=str(_REPO / 'querygym/rag_results'),
                        help='Base directory containing retrieval and retrieval_cohere folders')
-    parser.add_argument('--nugget-file', type=str, 
-                       default='/future/u/negara/home/set_based_QPP/data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl',
+    parser.add_argument('--nugget-file', type=str,
+                       default=str(_REPO / 'data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl'),
                        help='Path to nugget file')
     parser.add_argument('--output-dir', type=str,
-                       default='/future/u/negara/home/set_based_QPP/querygym/rag_nuggetized_eval',
+                       default=str(_REPO / 'querygym/rag_nuggetized_eval'),
                        help='Output directory for assignments and scores')
     parser.add_argument('--log-file', type=str, default=None,
                        help='Log file path (default: auto-generated)')
@@ -397,7 +399,7 @@ def main():
     # Create log file with timestamp if not provided
     if args.log_file is None:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = f"/future/u/negara/home/set_based_QPP/rag_nuggetizer_log_{timestamp}.txt"
+        log_file = str(_REPO / f"rag_nuggetizer_log_{timestamp}.txt")
     else:
         log_file = args.log_file
     
@@ -409,8 +411,8 @@ def main():
     rag_results_base = Path(args.rag_results_dir)
     nugget_file = Path(args.nugget_file)
     output_dir = Path(args.output_dir)
-    assign_script = Path("/future/u/negara/home/set_based_QPP/nuggetizer/scripts/assign_nuggets.py")
-    score_script = Path("/future/u/negara/home/set_based_QPP/nuggetizer/scripts/calculate_metrics.py")
+    assign_script = _REPO / "nuggetizer/scripts/assign_nuggets.py"
+    score_script = _REPO / "nuggetizer/scripts/calculate_metrics.py"
     
     # Verify input files exist
     if not rag_results_base.exists():

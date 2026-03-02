@@ -6,7 +6,11 @@ Called from subprocess to avoid JVM conflicts.
 
 import sys
 import os
-sys.path.append('/future/u/negara/home/set_based_QPP')
+from pathlib import Path
+
+_REPO = Path(__file__).resolve().parent.parent.parent
+
+sys.path.insert(0, str(_REPO))
 
 # Import the processing functions directly
 # Add the qpp directory to path

@@ -6,6 +6,8 @@ Create filtered oracle CSV with only key columns, combining pyserini and cohere.
 import pandas as pd
 from pathlib import Path
 
+_REPO = Path(__file__).resolve().parent.parent
+
 
 def create_filtered_oracle(pyserini_file, cohere_file, output_file):
     """Create filtered oracle CSV with key columns only."""
@@ -38,7 +40,7 @@ def create_filtered_oracle(pyserini_file, cohere_file, output_file):
 
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     oracle_dir = base_dir / "qpp_oracle_analysis"
     final_dir = oracle_dir / "final"
     final_dir.mkdir(exist_ok=True)

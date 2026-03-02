@@ -9,6 +9,8 @@ import numpy as np
 from pathlib import Path
 from matplotlib.backends.backend_pdf import PdfPages
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def create_oracle_plot(df, retrieval_method, ax):
     """Create oracle performance plot for one retrieval method."""
     
@@ -89,7 +91,7 @@ def create_oracle_plot(df, retrieval_method, ax):
 
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     oracle_dir = base_dir / "qpp_oracle_analysis"
     
     # Load data

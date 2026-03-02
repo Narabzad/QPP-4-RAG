@@ -9,6 +9,8 @@ import sys
 from pathlib import Path
 from typing import Dict, List
 
+_REPO = Path(__file__).resolve().parent.parent
+
 # Set up Java environment before importing pyserini
 def setup_java_environment():
     """Set up Java environment variables needed for pyserini."""
@@ -125,7 +127,7 @@ def get_query_file_for_run(run_file: Path, base_dir: Path) -> Path:
 
 def main():
     # Configuration
-    BASE_DIR = Path("/future/u/negara/home/set_based_QPP")
+    BASE_DIR = _REPO
     
     INPUT_DIRS = [
         BASE_DIR / "querygym/retrieval_cohere",

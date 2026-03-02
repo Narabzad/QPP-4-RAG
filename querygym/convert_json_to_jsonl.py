@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 from tqdm import tqdm
 
+_REPO = Path(__file__).resolve().parent.parent
+
 def convert_json_to_jsonl(input_file, output_file):
     """Convert JSON array to JSONL."""
     with open(input_file, 'r', encoding='utf-8') as f:
@@ -17,7 +19,7 @@ def convert_json_to_jsonl(input_file, output_file):
             f.write(json.dumps(item, ensure_ascii=False) + '\n')
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     input_dir = base_dir / "rag_results_o"
     output_dir = base_dir / "rag_results_o_jsonl"
     

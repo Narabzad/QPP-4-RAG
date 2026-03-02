@@ -6,27 +6,29 @@ Run nuggetizer evaluation on generation-only results.
 import sys
 from pathlib import Path
 
+_REPO = Path(__file__).resolve().parent.parent
+
 # Add to path
-sys.path.append('/future/u/negara/home/set_based_QPP/querygym')
+sys.path.insert(0, str(_REPO / 'querygym'))
 from run_rag_nuggetizer import run_nugget_assignment, run_scoring, log_progress
 from datetime import datetime
 
 def main():
-    base_dir = Path("/future/u/negara/home/set_based_QPP/querygym")
+    base_dir = _REPO / "querygym"
     rag_results_dir = base_dir / "rag_results_o"  # Files are .json but JSONL format inside
-    nugget_file = "/future/u/negara/home/set_based_QPP/data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl"
+    nugget_file = str(_REPO / "data/hr_scored_nist_nuggets_20241218_rag24.test_qrels_nist.jsonl")
     output_dir = base_dir / "rag_nuggetized_eval_o"
-    
+
     # Create log file
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     log_file = base_dir / f"rag_generation_only_nuggetizer_log_{timestamp}.txt"
-    
+
     log_progress(str(log_file), "="*80)
     log_progress(str(log_file), "Starting nuggetizer evaluation for generation-only results...")
     log_progress(str(log_file), "="*80)
-    
-    assign_script = Path("/future/u/negara/home/set_based_QPP/nuggetizer/scripts/assign_nuggets.py")
-    score_script = Path("/future/u/negara/home/set_based_QPP/nuggetizer/scripts/calculate_metrics.py")
+
+    assign_script = _REPO / "nuggetizer/scripts/assign_nuggets.py"
+    score_script = _REPO / "nuggetizer/scripts/calculate_metrics.py"
     
     # Verify paths
     if not rag_results_dir.exists():
